@@ -15,6 +15,15 @@ router.get("/",(req,res)=>{
         })
     })
 })
+router.get("/getuserfromtoken",(req,res)=>{
+    try {
+        const token = req.headers.authorization.split(" ")[1];
+        const userData = jwt.verify(token,process.env.JWT_SECRET)
+        res.json({user:userData})
+    } catch (error) {
+        res.status(500).json({user:false})
+    }
+})
 router.get("/:id",(req,res)=>{
     User.findByPk(req.params.id,{
         include:[Todo]
@@ -53,5 +62,6 @@ router.post("/login",(req,res)=>{
         }
     })
 })
+
 
 module.exports = router;
