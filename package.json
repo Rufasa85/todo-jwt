@@ -1,0 +1,28 @@
+{
+  "name": "todo-jwt",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.26.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed":"node seeds/seedMe.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rufasa85/todo-jwt.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rufasa85/todo-jwt/issues"
+  },
+  "homepage": "https://github.com/Rufasa85/todo-jwt#readme"
+}
