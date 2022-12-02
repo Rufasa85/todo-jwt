@@ -46,4 +46,63 @@ router.post("/",(req,res)=>{
     }
 })
 
+router.delete("/:id",(req,res)=>{
+    try{
+        const token = req.headers.authorization.split(" ")[1];
+        const userData = jwt.verify(token,process.env.JWT_SECRET)
+        Todo.findByPk(req.params.id).then(foundTodo=>{
+            if(!foundTodo){
+                return res.status(404).json({
+                    msg:"no such item exists!"
+                })
+            } else if(foundTodo.UserId!==userData.id){
+                return res.status(403).json({
+                    msg:"you dont own this todo!"
+                })
+            } else {
+                Todo.destroy({
+                    where:{
+                        id:req.params.id
+                    }
+                }).then(delTodo=>{
+                    res.json(delTodo)
+                })
+            }
+        })
+    }catch(err){
+        console.log(err);
+        res.status(500).json({msg:"an error occured",err})
+    }
+})
+router.put("/:id",(req,res)=>{
+    try{
+        const token = req.headers.authorization.split(" ")[1];
+        const userData = jwt.verify(token,process.env.JWT_SECRET)
+        Todo.findByPk(req.params.id).then(foundTodo=>{
+            if(!foundTodo){
+                return res.status(404).json({
+                    msg:"no such item exists!"
+                })
+            } else if(foundTodo.UserId!==userData.id){
+                return res.status(403).json({
+                    msg:"you dont own this todo!"
+                })
+            } else {
+                Todo.update(
+                    req.body,
+                    {
+                    where:{
+                        id:req.params.id
+                    }
+                }).then(delTodo=>{
+                    res.json(delTodo)
+                })
+            }
+        })
+    }catch(err){
+        console.log(err);
+        res.status(500).json({msg:"an error occured",err})
+    }
+})
+
 module.exports = router;

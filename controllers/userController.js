@@ -15,6 +15,20 @@ router.get("/",(req,res)=>{
         })
     })
 })
+router.post("/",(req,res)=>{
+    User.create(req.body).then(newUser=>{
+        const token = jwt.sign({
+            id:newUser.id,
+            email:newUser.email
+        },process.env.JWT_SECRET,{
+            expiresIn:"2h"
+        })
+        return res.json({
+            token,
+            user:newUser
+        })
+    })
+})
 router.get("/getuserfromtoken",(req,res)=>{
     try {
         const token = req.headers.authorization.split(" ")[1];
